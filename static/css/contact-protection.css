@@ -1,0 +1,98 @@
+/* Contact Information Protection Styles */
+
+/* Phone number as image styling */
+.phone-image {
+    display: inline-block;
+    background: linear-gradient(45deg, #007bff, #0056b3);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    font-size: 18px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+/* Email protection - reverse text with CSS correction */
+.email-protected {
+    direction: rtl;
+    unicode-bidi: bidi-override;
+    font-family: 'Courier New', monospace;
+}
+
+.email-protected span {
+    direction: ltr;
+    unicode-bidi: normal;
+}
+
+/* Hover effect for contact info */
+.contact-info-protected {
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.contact-info-protected:hover {
+    transform: scale(1.05);
+}
+
+/* Tooltip for contact info */
+.contact-tooltip {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.8);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.contact-info-protected:hover .contact-tooltip {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Address styling - less protection needed */
+.address-info {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+}
+
+/* Contact form emphasis */
+.contact-form-emphasis {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border: 2px solid #007bff;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.contact-form-emphasis h4 {
+    color: #007bff;
+    margin-bottom: 15px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .phone-image {
+        font-size: 16px;
+        padding: 6px 12px;
+    }
+    
+    .contact-tooltip {
+        font-size: 11px;
+        padding: 6px 10px;
+    }
+} 

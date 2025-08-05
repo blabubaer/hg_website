@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
+{% load static %}
 
 {% block title %}Kontakt | Herbert & Gransow - Planung GmbH{% endblock %}
 
@@ -30,6 +31,11 @@
                         <p class="text-center text-muted mb-4">
                             Füllen Sie das Formular aus und wir melden uns schnellstmöglich bei Ihnen.
                         </p>
+                        
+                        <div class="contact-form-emphasis mb-4">
+                            <h4><i class="fas fa-shield-alt me-2"></i>Sicherer Kontakt</h4>
+                            <p class="mb-0">Nutzen Sie unser Kontaktformular für eine sichere und direkte Kommunikation. Ihre Daten werden vertraulich behandelt.</p>
+                        </div>
                         
                         <form method="post" novalidate>
                             {% csrf_token %}
@@ -84,7 +90,8 @@
                         <i class="fas fa-phone fa-3x text-primary mb-3"></i>
                         <h5 class="card-title">Telefon</h5>
                         <p class="card-text">
-                            <strong>+49 361 75193660</strong><br>
+                            <img src="{% static 'images/phone-number.png' %}" alt="+49 361 75193660" class="phone-image" style="height: 35px; width: auto;">
+                            <br>
                             Mo-Fr: 8:00 - 17:00 Uhr
                         </p>
                     </div>
@@ -96,8 +103,11 @@
                         <i class="fas fa-envelope fa-3x text-primary mb-3"></i>
                         <h5 class="card-title">E-Mail</h5>
                         <p class="card-text">
-                            <strong>info@hg-planung.de</strong><br>
-                            Antwort innerhalb von 24 Stunden
+                            <span class="email-protected">
+                                <span>ed.gnulap-gh@ofni</span>
+                            </span>
+                            <br>
+                            <small class="text-muted">(Kontaktformular bevorzugt)</small>
                         </p>
                     </div>
                 </div>
