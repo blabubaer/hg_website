@@ -1,161 +1,125 @@
 from django.core.management.base import BaseCommand
-from django.utils import timezone
-from django.core.files.base import ContentFile
 from projects.models import ProjectCategory, Project
-from datetime import date
-import os
 
 
 class Command(BaseCommand):
-    help = 'Add sample projects based on original website references'
+    help = 'Add sample project categories and projects based on original website'
 
     def handle(self, *args, **options):
-        self.stdout.write('Creating sample projects...')
+        self.stdout.write('Adding sample project categories and projects...')
 
-        # Create categories based on original website structure
-        categories = {
-            'historische-gebaeude': {
-                'name': 'Historische Gebäude',
-                'description': 'Elektroplanung für historische Gebäude und Denkmäler',
+        # Define project categories based on original website structure
+        categories_data = [
+            {
+                'name': 'Referenzen Mario Gransow',
+                'description': 'Projekte von Mario Gransow',
                 'order': 1
             },
-            'oeffentliche-gebaeude': {
-                'name': 'Öffentliche Gebäude',
-                'description': 'Planung für öffentliche Einrichtungen und Verwaltungsgebäude',
+            {
+                'name': 'Referenzen Egbert Herbert',
+                'description': 'Projekte von Egbert Herbert',
                 'order': 2
             },
-            'industrie-gewerbe': {
-                'name': 'Industrie & Gewerbe',
-                'description': 'Elektroplanung für Industrieanlagen und Gewerbebauten',
+            {
+                'name': 'Referenzen Herbert & Gransow',
+                'description': 'Gemeinsame Projekte von Herbert & Gransow',
                 'order': 3
-            },
-            'aussenanlagen': {
-                'name': 'Außenanlagen',
-                'description': 'Elektroplanung für Außenanlagen und Landschaftsgestaltung',
-                'order': 4
             }
-        }
+        ]
 
         # Create categories
-        created_categories = {}
-        for slug, data in categories.items():
+        categories = {}
+        for cat_data in categories_data:
             category, created = ProjectCategory.objects.get_or_create(
-                name=data['name'],
+                name=cat_data['name'],
                 defaults={
-                    'description': data['description'],
-                    'order': data['order']
+                    'description': cat_data['description'],
+                    'order': cat_data['order']
                 }
             )
-            created_categories[slug] = category
+            categories[cat_data['name']] = category
             if created:
                 self.stdout.write(f'Created category: {category.name}')
-            else:
-                self.stdout.write(f'Category already exists: {category.name}')
 
-        # Sample projects based on original website
+        # Define sample projects based on original website
         projects_data = [
             {
-                'title': 'Historische Altstadt Schmalkalden',
-                'slug': 'historische-altstadt-schmalkalden',
-                'category': 'historische-gebaeude',
-                'description': '''Planung der technischen Ausrüstung für die historische Altstadt Schmalkaldens.
-
-Das Projekt umfasste die umfassende Elektroplanung für die historische Altstadt Schmalkaldens, einschließlich der Beleuchtung historischer Gebäude, der Integration moderner Sicherheitstechnik in denkmalgeschützte Strukturen und der Schaffung einer harmonischen Verbindung zwischen historischem Charme und moderner Technik.
-
-Besondere Herausforderungen waren die Integration der Elektroinstallation in die historische Bausubstanz unter Berücksichtigung der Denkmalschutzauflagen sowie die Planung einer energieeffizienten Beleuchtung, die die historische Atmosphäre bewahrt.''',
-                'short_description': 'Elektroplanung für die historische Altstadt Schmalkaldens mit Integration moderner Technik in denkmalgeschützte Strukturen.',
+                'title': 'Schmalkalden - Historische Altstadt',
+                'slug': 'schmalkalden-historische-altstadt',
+                'category': 'Referenzen Egbert Herbert',
+                'description': 'Umfassende Elektroplanung für die historische Altstadt von Schmalkalden. Das Projekt umfasste die Modernisierung der elektrischen Infrastruktur unter Berücksichtigung des denkmalgeschützten Charakters der Gebäude.',
+                'short_description': 'Elektroplanung für historische Altstadt',
                 'client': 'Stadt Schmalkalden',
                 'location': 'Schmalkalden, Thüringen',
-                'completion_date': date(2014, 12, 1),
+                'completion_date': '2020-06-15',
                 'is_featured': True,
                 'order': 1
             },
             {
-                'title': 'Landesgartenschau 2015 - Grüngürtel Schmalkalden',
-                'slug': 'landesgartenschau-2015-gruenguertel-schmalkalden',
-                'category': 'aussenanlagen',
-                'description': '''Außenanlagen im Bereich „Grüngürtel" der Innenstadt Schmalkalden bei den Vorbereitungen zur Landesgartenschau 2015.
-
-Das Projekt umfasste die komplette Elektroplanung für die Außenanlagen der Landesgartenschau 2015 in Schmalkalden. Dazu gehörten die Planung der Beleuchtungsanlagen für die Gartenausstellungen, die elektrotechnische Ausstattung der Veranstaltungsflächen, die Sicherheitstechnik für die Besucherbereiche sowie die Integration von LED-Technologie für energieeffiziente Außenbeleuchtung.
-
-Besondere Highlights waren die Planung der Beleuchtung für die verschiedenen Gartenbereiche, die Schaffung einer stimmungsvollen Atmosphäre für Abendveranstaltungen und die Integration von Sicherheitstechnik, die sich harmonisch in die Gartenlandschaft einfügt.''',
-                'short_description': 'Elektroplanung für die Außenanlagen der Landesgartenschau 2015 mit moderner LED-Beleuchtung und Sicherheitstechnik.',
-                'client': 'Landesgartenschau Schmalkalden 2015 GmbH',
-                'location': 'Schmalkalden, Thüringen',
-                'completion_date': date(2015, 4, 1),
+                'title': 'Landesgartenschau Bad Langensalza',
+                'slug': 'landesgartenschau-bad-langensalza',
+                'category': 'Referenzen Egbert Herbert',
+                'description': 'Technische Gebäudeausrüstung für die Landesgartenschau in Bad Langensalza. Planung und Umsetzung der elektrischen Anlagen für Ausstellungsgebäude, Beleuchtung und Infrastruktur.',
+                'short_description': 'TGA für Landesgartenschau',
+                'client': 'Landesgartenschau Bad Langensalza GmbH',
+                'location': 'Bad Langensalza, Thüringen',
+                'completion_date': '2021-04-20',
                 'is_featured': True,
                 'order': 2
             },
             {
-                'title': 'VIBA-Nougatworld - Außenanlagen',
-                'slug': 'viba-nougatworld-aussenanlagen',
-                'category': 'industrie-gewerbe',
-                'description': '''Planung der Außenanlagen der VIBA-Nougatworld mit modernster Technik.
-
-Das Projekt umfasste die komplette Elektroplanung für die Außenanlagen der VIBA-Nougatworld, einer modernen Produktions- und Erlebniswelt für Nougatprodukte. Dazu gehörten die Planung der Beleuchtungsanlagen für die Produktionsbereiche, die elektrotechnische Ausstattung der Besucherbereiche, die Sicherheitstechnik für die gesamte Anlage sowie die Integration von energieeffizienten LED-Systemen.
-
-Besondere Herausforderungen waren die Planung der Beleuchtung für die Produktionshallen, die Schaffung einer ansprechenden Atmosphäre für Besucherbereiche und die Integration von Sicherheitstechnik, die sowohl den Produktionsanforderungen als auch den Besuchererwartungen gerecht wird.''',
-                'short_description': 'Elektroplanung für die Außenanlagen der VIBA-Nougatworld mit modernster LED-Technologie und Sicherheitstechnik.',
+                'title': 'VIBA-Nougatworld Schmalkalden',
+                'slug': 'viba-nougatworld-schmalkalden',
+                'category': 'Referenzen Egbert Herbert',
+                'description': 'Elektroplanung für das VIBA-Nougatworld Besucherzentrum in Schmalkalden. Modernste Technologie für ein interaktives Museumserlebnis mit umweltfreundlichen Lösungen.',
+                'short_description': 'Elektroplanung für Besucherzentrum',
                 'client': 'VIBA-Nougatworld GmbH',
                 'location': 'Schmalkalden, Thüringen',
-                'completion_date': date(2016, 6, 1),
+                'completion_date': '2019-09-10',
                 'is_featured': True,
                 'order': 3
             },
             {
-                'title': 'Rathaus Schmalkalden - Modernisierung',
-                'slug': 'rathaus-schmalkalden-modernisierung',
-                'category': 'oeffentliche-gebaeude',
-                'description': '''Modernisierung der Elektroinstallation im historischen Rathaus Schmalkalden.
-
-Das Projekt umfasste die komplette Modernisierung der Elektroinstallation im historischen Rathaus Schmalkalden unter Berücksichtigung der Denkmalschutzauflagen. Dazu gehörten die Erneuerung der Beleuchtungsanlagen, die Modernisierung der Sicherheitstechnik, die Integration von moderner Kommunikationstechnik sowie die Planung einer energieeffizienten Gebäudetechnik.
-
-Besondere Herausforderungen waren die Integration moderner Technik in die historische Bausubstanz, die Schaffung einer funktionalen Arbeitsumgebung für die Verwaltung und die Bewahrung des historischen Charakters des Gebäudes.''',
-                'short_description': 'Modernisierung der Elektroinstallation im historischen Rathaus Schmalkalden mit Integration moderner Technik.',
-                'client': 'Stadt Schmalkalden',
-                'location': 'Schmalkalden, Thüringen',
-                'completion_date': date(2017, 3, 1),
-                'is_featured': False,
+                'title': 'Industriepark Erfurt',
+                'slug': 'industriepark-erfurt',
+                'category': 'Referenzen Mario Gransow',
+                'description': 'Umfassende Elektroplanung für den neuen Industriepark in Erfurt. Planung der kompletten elektrischen Infrastruktur für moderne Gewerbeflächen mit Fokus auf Nachhaltigkeit.',
+                'short_description': 'Elektroplanung für Industriepark',
+                'client': 'Stadt Erfurt',
+                'location': 'Erfurt, Thüringen',
+                'completion_date': '2022-03-15',
+                'is_featured': True,
                 'order': 4
             },
             {
-                'title': 'Produktionshalle Metallbau Schmalkalden',
-                'slug': 'produktionshalle-metallbau-schmalkalden',
-                'category': 'industrie-gewerbe',
-                'description': '''Elektroplanung für eine moderne Produktionshalle im Metallbau.
-
-Das Projekt umfasste die komplette Elektroplanung für eine neue Produktionshalle im Metallbau, einschließlich der Planung der Maschinenanschlüsse, der Beleuchtungsanlagen für die Produktionsbereiche, der Sicherheitstechnik und der Integration von moderner Steuerungstechnik für die Produktionsanlagen.
-
-Besondere Herausforderungen waren die Planung der Maschinenanschlüsse für verschiedene Produktionsanlagen, die Schaffung einer optimalen Beleuchtung für die Präzisionsarbeit im Metallbau und die Integration von Sicherheitstechnik, die den Anforderungen der Metallverarbeitung gerecht wird.''',
-                'short_description': 'Elektroplanung für eine moderne Produktionshalle im Metallbau mit Maschinenanschlüssen und Sicherheitstechnik.',
-                'client': 'Metallbau Schmalkalden GmbH',
-                'location': 'Schmalkalden, Thüringen',
-                'completion_date': date(2018, 9, 1),
+                'title': 'Klinikum Weimar',
+                'slug': 'klinikum-weimar',
+                'category': 'Referenzen Mario Gransow',
+                'description': 'Technische Gebäudeausrüstung für die Erweiterung des Klinikums Weimar. Planung der elektrischen Anlagen unter Berücksichtigung der besonderen Anforderungen im Gesundheitswesen.',
+                'short_description': 'TGA für Klinikerweiterung',
+                'client': 'Klinikum Weimar',
+                'location': 'Weimar, Thüringen',
+                'completion_date': '2021-11-30',
                 'is_featured': False,
                 'order': 5
             },
             {
-                'title': 'Seniorenheim "Haus am Park" - Erweiterung',
-                'slug': 'seniorenheim-haus-am-park-erweiterung',
-                'category': 'oeffentliche-gebaeude',
-                'description': '''Elektroplanung für die Erweiterung des Seniorenheims "Haus am Park".
-
-Das Projekt umfasste die Elektroplanung für die Erweiterung des Seniorenheims "Haus am Park", einschließlich der Planung der Beleuchtungsanlagen für die neuen Wohnbereiche, der Sicherheitstechnik für die Pflegebereiche, der Kommunikationstechnik und der Integration von moderner Gebäudetechnik für den Komfort der Bewohner.
-
-Besondere Herausforderungen waren die Schaffung einer wohnlichen Atmosphäre durch angepasste Beleuchtung, die Integration von Sicherheitstechnik, die den besonderen Anforderungen der Pflege gerecht wird, und die Planung von Kommunikationstechnik, die den Bewohnern und dem Pflegepersonal den Alltag erleichtert.''',
-                'short_description': 'Elektroplanung für die Erweiterung des Seniorenheims mit moderner Sicherheits- und Kommunikationstechnik.',
-                'client': 'Seniorenheim "Haus am Park" GmbH',
-                'location': 'Schmalkalden, Thüringen',
-                'completion_date': date(2019, 11, 1),
-                'is_featured': False,
+                'title': 'Bildungszentrum Jena',
+                'slug': 'bildungszentrum-jena',
+                'category': 'Referenzen Herbert & Gransow',
+                'description': 'Gemeinsames Projekt für das neue Bildungszentrum in Jena. Moderne Elektroplanung für ein zukunftsweisendes Bildungskonzept mit digitalen Lernumgebungen.',
+                'short_description': 'Elektroplanung für Bildungszentrum',
+                'client': 'Stadt Jena',
+                'location': 'Jena, Thüringen',
+                'completion_date': '2023-01-20',
+                'is_featured': True,
                 'order': 6
             }
         ]
 
         # Create projects
         for project_data in projects_data:
-            category = created_categories[project_data['category']]
-            
+            category = categories[project_data['category']]
             project, created = Project.objects.get_or_create(
                 slug=project_data['slug'],
                 defaults={
@@ -170,12 +134,9 @@ Besondere Herausforderungen waren die Schaffung einer wohnlichen Atmosphäre dur
                     'order': project_data['order']
                 }
             )
-            
             if created:
                 self.stdout.write(f'Created project: {project.title}')
-            else:
-                self.stdout.write(f'Project already exists: {project.title}')
 
         self.stdout.write(
-            self.style.SUCCESS('Successfully created sample projects!')
+            self.style.SUCCESS('Successfully added sample project categories and projects!')
         ) 
