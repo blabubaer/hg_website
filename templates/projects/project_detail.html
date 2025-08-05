@@ -1,0 +1,187 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ project.title }} | Herbert & Gransow - Planung GmbH{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-center">
+                        <li class="breadcrumb-item">
+                            <a href="{% url 'core:home' %}" class="text-light">Home</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="{% url 'projects:project_list' %}" class="text-light">Referenzen</a>
+                        </li>
+                        <li class="breadcrumb-item active text-light" aria-current="page">{{ project.title }}</li>
+                    </ol>
+                </nav>
+                <h1 class="display-4 fw-bold mb-4">{{ project.title }}</h1>
+                <p class="lead">{{ project.short_description|default:project.description|truncatewords:20 }}</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Project Details -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <!-- Main Content -->
+            <div class="col-lg-8">
+                <!-- Main Image -->
+                {% if project.main_image %}
+                <div class="mb-4">
+                    <img src="{{ project.main_image.url }}" class="img-fluid rounded" alt="{{ project.title }}">
+                </div>
+                {% endif %}
+
+                <!-- Project Description -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h3 class="card-title">Projektbeschreibung</h3>
+                        <div class="project-description">
+                            {{ project.description|linebreaks }}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Gallery -->
+                {% if project.images.all %}
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h3 class="card-title">Projektgalerie</h3>
+                        <div class="row g-3">
+                            {% for image in project.images.all %}
+                            <div class="col-md-6">
+                                <div class="position-relative">
+                                    <img src="{{ image.image.url }}" class="img-fluid rounded" alt="{{ image.caption|default:project.title }}">
+                                    {% if image.caption %}
+                                    <div class="position-absolute bottom-0 start-0 w-100 bg-dark bg-opacity-75 text-white p-2 rounded-bottom">
+                                        <small>{{ image.caption }}</small>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                <!-- Project Info Card -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Projektinformationen</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled">
+                            <li class="mb-3">
+                                <strong><i class="fas fa-tag text-primary me-2"></i>Kategorie:</strong><br>
+                                <span class="badge bg-primary">{{ project.category.name }}</span>
+                            </li>
+                            {% if project.client %}
+                            <li class="mb-3">
+                                <strong><i class="fas fa-user text-primary me-2"></i>Kunde:</strong><br>
+                                {{ project.client }}
+                            </li>
+                            {% endif %}
+                            {% if project.location %}
+                            <li class="mb-3">
+                                <strong><i class="fas fa-map-marker-alt text-primary me-2"></i>Standort:</strong><br>
+                                {{ project.location }}
+                            </li>
+                            {% endif %}
+                            {% if project.completion_date %}
+                            <li class="mb-3">
+                                <strong><i class="fas fa-calendar text-primary me-2"></i>Fertigstellung:</strong><br>
+                                {{ project.completion_date|date:"F Y" }}
+                            </li>
+                            {% endif %}
+                            <li class="mb-3">
+                                <strong><i class="fas fa-clock text-primary me-2"></i>Erstellt:</strong><br>
+                                {{ project.created_at|date:"d.m.Y" }}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Contact CTA -->
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Interessiert an einem ähnlichen Projekt?</h5>
+                        <p class="card-text">
+                            Lassen Sie uns über Ihre Anforderungen sprechen.
+                        </p>
+                        <a href="{% url 'contact:contact' %}" class="btn btn-primary">
+                            <i class="fas fa-envelope me-2"></i>Kontakt aufnehmen
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Related Projects -->
+{% if related_projects %}
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center mb-5">
+                <h2>Ähnliche Projekte</h2>
+                <p class="lead text-muted">Weitere Projekte aus der Kategorie {{ project.category.name }}</p>
+            </div>
+        </div>
+        <div class="row g-4">
+            {% for related_project in related_projects %}
+            <div class="col-lg-4 col-md-6">
+                <div class="card h-100">
+                    {% if related_project.main_image %}
+                    <img src="{{ related_project.main_image.url }}" class="card-img-top" alt="{{ related_project.title }}" style="height: 200px; object-fit: cover;">
+                    {% else %}
+                    <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                        <i class="fas fa-image fa-3x text-muted"></i>
+                    </div>
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ related_project.title }}</h5>
+                        {% if related_project.short_description %}
+                        <p class="card-text">{{ related_project.short_description }}</p>
+                        {% endif %}
+                        <a href="{{ related_project.get_absolute_url }}" class="btn btn-outline-primary">
+                            <i class="fas fa-eye me-2"></i>Details ansehen
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Navigation -->
+<section class="py-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="d-flex justify-content-between">
+                    <a href="{% url 'projects:project_list' %}" class="btn btn-outline-primary">
+                        <i class="fas fa-arrow-left me-2"></i>Zurück zu allen Projekten
+                    </a>
+                    <a href="{% url 'contact:contact' %}" class="btn btn-primary">
+                        <i class="fas fa-envelope me-2"></i>Angebot anfordern
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %} 
