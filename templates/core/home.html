@@ -1,0 +1,204 @@
+{% extends 'base.html' %}
+
+{% block title %}Herbert & Gransow - Planung GmbH | Technische Gebäudeausrüstung{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="display-4 fw-bold mb-4">
+                    Technische Gebäudeausrüstung & Elektrotechnik
+                </h1>
+                <p class="lead mb-4">
+                    Seit 2019 Ihr zuverlässiger Partner für professionelle Planung und Beratung 
+                    im Bereich der Technischen Gebäudeausrüstung und Elektrotechnik.
+                </p>
+                <div class="d-flex gap-3">
+                    <a href="{% url 'projects:project_list' %}" class="btn btn-light btn-lg">
+                        <i class="fas fa-eye me-2"></i>Unsere Referenzen
+                    </a>
+                    <a href="{% url 'contact:contact' %}" class="btn btn-outline-light btn-lg">
+                        <i class="fas fa-envelope me-2"></i>Kontakt aufnehmen
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center">
+                <i class="fas fa-bolt fa-10x text-light opacity-50"></i>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="mb-4">Über Herbert & Gransow - Planung GmbH</h2>
+                <p class="lead text-muted">
+                    Hervorgehend aus dem 1993 von Herrn Herbert und Herrn Schäfer gegründeten 
+                    Planungsbüro Herbert & Schäfer – Planung, entsteht am 01. Januar 2019 das 
+                    Planungsbüro Herbert & Gransow – Planung GmbH mit Sitz in Erfurt.
+                </p>
+                <p class="text-muted">
+                    Unser Büro wird den Kundenstamm übernehmen und in gewohnter Weise im Bereich 
+                    der Technischen Gebäudeausrüstung / Elektrotechnik tätig sein. Herr Mario Gransow, 
+                    Jahrgang 1966, wird sich als erfahrener Partner in die Aufgaben von Herrn Herbert 
+                    einarbeiten und für Sie in allen Belangen da sein.
+                </p>
+                <a href="{% url 'core:about' %}" class="btn btn-primary">
+                    Mehr über uns erfahren
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Services Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center mb-5">
+                <h2>Unsere Leistungen</h2>
+                <p class="lead text-muted">Professionelle Planung und Beratung in allen Bereichen der Elektrotechnik</p>
+            </div>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 text-center">
+                    <div class="card-body">
+                        <i class="fas fa-building fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">Technische Gebäudeausrüstung</h5>
+                        <p class="card-text">
+                            Umfassende Planung und Beratung für alle Aspekte der technischen 
+                            Gebäudeausrüstung in modernen Bauprojekten.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 text-center">
+                    <div class="card-body">
+                        <i class="fas fa-plug fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">Elektrotechnik</h5>
+                        <p class="card-text">
+                            Professionelle Elektroplanung für gewerbliche und private Bauvorhaben 
+                            mit modernsten Standards und Technologien.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 text-center">
+                    <div class="card-body">
+                        <i class="fas fa-project-diagram fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">Projektleitung</h5>
+                        <p class="card-text">
+                            Erfahrene Projektleitung für große und kleine Bauvorhaben mit 
+                            Fokus auf Termintreue und Qualität.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Projects Section -->
+{% if featured_projects %}
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center mb-5">
+                <h2>Ausgewählte Referenzen</h2>
+                <p class="lead text-muted">Einige unserer erfolgreich abgeschlossenen Projekte</p>
+            </div>
+        </div>
+        <div class="row g-4">
+            {% for project in featured_projects %}
+            <div class="col-lg-4 col-md-6">
+                <div class="card h-100">
+                    {% if project.main_image %}
+                    <img src="{{ project.main_image.url }}" class="card-img-top" alt="{{ project.title }}" style="height: 200px; object-fit: cover;">
+                    {% else %}
+                    <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                        <i class="fas fa-image fa-3x text-muted"></i>
+                    </div>
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ project.title }}</h5>
+                        <p class="card-text text-muted">{{ project.category.name }}</p>
+                        {% if project.short_description %}
+                        <p class="card-text">{{ project.short_description }}</p>
+                        {% endif %}
+                        <a href="{{ project.get_absolute_url }}" class="btn btn-outline-primary">
+                            Details ansehen
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="row mt-4">
+            <div class="col-12 text-center">
+                <a href="{% url 'projects:project_list' %}" class="btn btn-primary btn-lg">
+                    Alle Referenzen ansehen
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Contact Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h2>Lassen Sie uns über Ihr Projekt sprechen</h2>
+                <p class="lead mb-4">
+                    Profitieren Sie vom Know-how unseres Ingenieurbüros. 
+                    Wir laden Sie gerne zu einem persönlichen Beratungsgespräch ein.
+                </p>
+                <div class="d-flex flex-column gap-3">
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-phone fa-2x text-primary me-3"></i>
+                        <div>
+                            <strong>Telefon</strong><br>
+                            +49 361 75193660
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-envelope fa-2x text-primary me-3"></i>
+                        <div>
+                            <strong>E-Mail</strong><br>
+                            info@hg-planung.de
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-map-marker-alt fa-2x text-primary me-3"></i>
+                        <div>
+                            <strong>Adresse</strong><br>
+                            Kühnhäuser Straße 15<br>
+                            99095 Erfurt
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Kontaktformular</h5>
+                        <p class="card-text">Senden Sie uns eine Nachricht und wir melden uns schnellstmöglich bei Ihnen.</p>
+                        <a href="{% url 'contact:contact' %}" class="btn btn-primary">
+                            Nachricht senden
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %} 
