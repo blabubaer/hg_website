@@ -1,0 +1,19 @@
+Neue Kontaktanfrage - Herbert & Gransow - Planung GmbH
+====================================================
+
+Eine neue Kontaktanfrage ist über die Website eingegangen:
+
+Name: {{ contact_message.name }}
+E-Mail: {{ contact_message.email }}
+{% if contact_message.phone %}Telefon: {{ contact_message.phone }}{% endif %}
+{% if contact_message.company %}Firma: {{ contact_message.company }}{% endif %}
+Betreff: {{ contact_message.subject }}
+
+Nachricht:
+{{ contact_message.message }}
+
+Eingegangen am: {{ contact_message.created_at|date:"d.m.Y H:i" }} Uhr
+
+---
+Diese E-Mail wurde automatisch von der Website Herbert & Gransow - Planung GmbH generiert.
+Kühnhäuser Straße 15, 99095 Erfurt | Tel: +49 361 75193660 | info@hg-planung.de 

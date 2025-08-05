@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neue Kontaktanfrage - Herbert & Gransow</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 5px 5px 0 0;
+        }
+        .content {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 0 0 5px 5px;
+        }
+        .field {
+            margin-bottom: 15px;
+        }
+        .field-label {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .field-value {
+            background-color: white;
+            padding: 10px;
+            border-radius: 3px;
+            border-left: 4px solid #3498db;
+        }
+        .message-box {
+            background-color: white;
+            padding: 15px;
+            border-radius: 3px;
+            border-left: 4px solid #e74c3c;
+            margin-top: 20px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            color: #666;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Neue Kontaktanfrage</h1>
+        <p>Herbert & Gransow - Planung GmbH</p>
+    </div>
+    
+    <div class="content">
+        <p>Eine neue Kontaktanfrage ist über die Website eingegangen:</p>
+        
+        <div class="field">
+            <div class="field-label">Name:</div>
+            <div class="field-value">{{ contact_message.name }}</div>
+        </div>
+        
+        <div class="field">
+            <div class="field-label">E-Mail:</div>
+            <div class="field-value">{{ contact_message.email }}</div>
+        </div>
+        
+        {% if contact_message.phone %}
+        <div class="field">
+            <div class="field-label">Telefon:</div>
+            <div class="field-value">{{ contact_message.phone }}</div>
+        </div>
+        {% endif %}
+        
+        {% if contact_message.company %}
+        <div class="field">
+            <div class="field-label">Firma:</div>
+            <div class="field-value">{{ contact_message.company }}</div>
+        </div>
+        {% endif %}
+        
+        <div class="field">
+            <div class="field-label">Betreff:</div>
+            <div class="field-value">{{ contact_message.subject }}</div>
+        </div>
+        
+        <div class="message-box">
+            <div class="field-label">Nachricht:</div>
+            <div>{{ contact_message.message|linebreaks }}</div>
+        </div>
+        
+        <p><strong>Eingegangen am:</strong> {{ contact_message.created_at|date:"d.m.Y H:i" }} Uhr</p>
+    </div>
+    
+    <div class="footer">
+        <p>Diese E-Mail wurde automatisch von der Website Herbert & Gransow - Planung GmbH generiert.</p>
+        <p>Kühnhäuser Straße 15, 99095 Erfurt | Tel: +49 361 75193660 | info@hg-planung.de</p>
+    </div>
+</body>
+</html> 
