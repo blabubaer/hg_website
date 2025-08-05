@@ -32,6 +32,7 @@
     direction: rtl;
     unicode-bidi: bidi-override;
     font-family: 'Courier New', monospace;
+    font-weight: bold;
     color: #007bff;
     text-decoration: none;
     transition: color 0.3s ease;
@@ -49,6 +50,7 @@
 
 /* Address styling with map link */
 .address-link {
+    font-weight: bold;
     color: #007bff;
     text-decoration: none;
     transition: color 0.3s ease;
