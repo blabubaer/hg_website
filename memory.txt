@@ -1,0 +1,277 @@
+# Herbert & Gransow - Planung GmbH Website Project Memory
+
+## Project Overview
+- **Client**: Herbert & Gransow - Planung GmbH (Father's company)
+- **Original Website**: https://hg-planung.de/ (WordPress hosted on Deutsche Telekom)
+- **New Website**: Custom Django application for VPS hosting
+- **Domain**: hg-planung.de (to remain the same)
+- **Hosting**: Render free tier
+- **Package Manager**: uv (instead of pip/venv)
+
+## Technology Stack
+- **Backend**: Django 5.2.4 (Python)
+- **Frontend**: Bootstrap 5 + Font Awesome + HTML templates
+- **Database**: SQLite (development), PostgreSQL (production on Render)
+- **Package Management**: uv
+- **Deployment**: Render (free tier)
+- **Email**: SMTP (Gmail or similar)
+
+## Project Structure
+```
+hg_website/
+├── hg_website/          # Main Django project
+│   ├── settings.py      # Project configuration
+│   ├── urls.py          # Main URL routing
+│   └── wsgi.py          # WSGI configuration
+├── core/                # Core app (home, about, services)
+├── projects/            # Projects app (referenzen)
+├── contact/             # Contact app (contact form)
+├── legal/               # Legal app (privacy, cookies)
+├── templates/           # HTML templates
+├── static/              # Static files (CSS, JS, images)
+├── media/               # Uploaded files (project images)
+├── requirements.txt     # Python dependencies
+├── build.sh            # Render deployment script
+├── render.yaml         # Render configuration
+└── manage.py           # Django management
+```
+
+## Key Features Implemented
+
+### 1. Core Pages
+- **Home Page**: Hero section, company overview, contact info
+- **About Page**: Company history, team information, experience
+- **Services Page**: Detailed service offerings, specializations
+- **Contact Page**: Contact form, map, contact information
+
+### 2. Projects/Referenzen
+- **Project Categories**: Historische Gebäude, Öffentliche Gebäude, Industrie & Gewerbe, Außenanlagen
+- **Project Details**: Title, description, client, location, completion date, images
+- **Project Gallery**: Multiple images per project
+- **Filtering**: By category
+- **Pagination**: For large project lists
+
+### 3. Contact Form
+- **Fields**: Name, email, phone, company, subject, message
+- **Email Integration**: SMTP configuration for sending emails
+- **Admin Interface**: View and manage contact submissions
+- **Success Messages**: User feedback
+
+### 4. Legal Compliance
+- **Privacy Policy**: Comprehensive German Datenschutzerklärung (GDPR compliant)
+- **Cookie Policy**: Detailed cookie information
+- **Cookie Notice**: Simple banner with localStorage management
+
+### 5. Admin Panel
+- **Django Admin**: Customized for easy content management
+- **Project Management**: Add/edit projects with images
+- **Contact Management**: View and respond to contact form submissions
+- **User-Friendly**: Designed for non-technical users (father and wife)
+
+## Problems Encountered and Solutions
+
+### 1. Package Management
+**Problem**: User preferred uv over traditional venv/pip
+**Solution**: Used uv for all package management and dependency installation
+**Command**: `uv add package-name` instead of `pip install package-name`
+
+### 2. Virtual Environment Setup
+**Problem**: Initial venv creation was rejected by user
+**Solution**: Removed venv and used uv's built-in environment management
+**Command**: `Remove-Item -Recurse -Force venv`
+
+### 3. Directory Creation Issues
+**Problem**: PowerShell `mkdir templates static media` failed
+**Solution**: Created directories one by one due to PowerShell syntax differences
+**Commands**: `mkdir templates`, `mkdir static`, `mkdir media`
+
+### 4. Django Migration Issues
+**Problem**: Incorrect migration created in contact app for ProjectImage model
+**Solution**: Deleted incorrect migration and recreated proper migrations
+**Files**: Deleted `contact/migrations/0001_initial.py`, recreated with correct models
+
+### 5. Local Server Issues
+**Problem**: localhost:8000 unreachable, missing manage.py
+**Solution**: Recreated manage.py file and ensured correct working directory
+**Fix**: Verified file existence with `Test-Path manage.py`
+
+### 6. Template Syntax Errors
+**Problem**: `TemplateSyntaxError: Invalid block tag 'static'`
+**Solution**: Added `{% load static %}` to templates
+**Files**: Updated `templates/core/home.html`
+
+### 7. Contact Information Protection
+**Problem**: Need to protect phone/email from web scraping
+**Initial Solution**: Image-based phone numbers (rejected by user)
+**Final Solution**: CSS obfuscation with functional links
+- **Phone**: Split into parts with CSS, `tel:` links
+- **Email**: Reversed text with `mailto:` links
+- **Address**: Google Maps links
+
+### 8. Font Consistency
+**Problem**: Email addresses used different font (Courier New) than rest of site
+**Solution**: Updated CSS to use consistent Arial font family
+**File**: `static/css/contact-protection.css`
+
+### 9. Google Maps Location
+**Problem**: Map on contact page showed wrong position
+**Solution**: Updated iframe src with correct coordinates
+**File**: `templates/contact/contact.html`
+
+### 10. Legal Page Contact Protection
+**Problem**: Contact information exposed in privacy/cookie policies
+**Solution**: Applied same protection methods to legal pages
+**Files**: `templates/legal/privacy_policy.html`, `templates/legal/cookie_policy.html`
+
+### 11. Media Files in Production
+**Problem**: Project images not displaying on Render deployment
+**Solution**: Updated URL configuration to serve media files in production
+**File**: `hg_website/urls.py`
+**Issue**: Render free tier limitations with media file serving (unresolved)
+
+## Django Apps Created
+
+### 1. Core App
+- **Purpose**: Main pages (home, about, services)
+- **Models**: None (static content)
+- **Views**: home, about, services
+- **URLs**: /, /ueber-uns/, /leistungen/
+
+### 2. Projects App
+- **Purpose**: Project showcase and management
+- **Models**: ProjectCategory, Project, ProjectImage
+- **Views**: project_list, project_detail
+- **URLs**: /projekte/, /projekte/<slug>/
+- **Admin**: Inline image management
+
+### 3. Contact App
+- **Purpose**: Contact form and email handling
+- **Models**: ContactMessage
+- **Views**: contact (form processing)
+- **URLs**: /kontakt/
+- **Features**: Email templates, admin interface
+
+### 4. Legal App
+- **Purpose**: Privacy and cookie policies
+- **Models**: None (static content)
+- **Views**: privacy_policy, cookie_policy
+- **URLs**: /rechtliches/datenschutz/, /rechtliches/cookie-richtlinie/
+
+## Management Commands Created
+
+### 1. add_sample_projects.py
+- **Purpose**: Populate database with sample project categories and projects
+- **Usage**: `uv run python manage.py add_sample_projects`
+- **Data**: 4 categories, 6 projects based on original website
+
+### 2. add_sample_images.py
+- **Purpose**: Download and add stock images to projects
+- **Usage**: `uv run python manage.py add_sample_images`
+- **Features**: Downloads images from URLs, saves to media directory
+
+## CSS Customizations
+
+### Contact Protection CSS (static/css/contact-protection.css)
+- **Phone Protection**: CSS-split text with tel: links
+- **Email Protection**: Reversed text with mailto: links
+- **Address Styling**: Google Maps links with consistent styling
+- **Font Consistency**: Arial font family for all contact elements
+
+## Deployment Configuration
+
+### Render Configuration (render.yaml)
+- **Service Type**: Web service
+- **Environment**: Python
+- **Plan**: Free tier
+- **Build Command**: ./build.sh
+- **Start Command**: gunicorn hg_website.wsgi:application
+- **Environment Variables**: SECRET_KEY, DEBUG, ALLOWED_HOSTS, EMAIL settings
+
+### Build Script (build.sh)
+- Install dependencies
+- Collect static files
+- Run database migrations
+
+## Environment Variables Required
+```
+SECRET_KEY=your-secret-key
+DEBUG=False
+ALLOWED_HOSTS=your-app-name.onrender.com
+EMAIL_HOST=smtp.gmail.com
+EMAIL_PORT=587
+EMAIL_USE_TLS=True
+EMAIL_HOST_USER=your-email@gmail.com
+EMAIL_HOST_PASSWORD=your-app-password
+```
+
+## Outstanding Issues
+
+### 1. Media Files on Render
+**Status**: Unresolved
+**Problem**: Render free tier doesn't support Django's media file serving
+**Potential Solutions**:
+- Use Cloudinary or similar external service
+- Upgrade to paid Render plan
+- Use different hosting provider
+- Store images as static files
+
+### 2. Email Configuration
+**Status**: Optional
+**Note**: Website works without email functionality
+**Setup**: Can be added later through Render dashboard
+
+## Git Workflow Used
+- Regular commits with descriptive messages
+- Feature-based commits
+- Used git revert for problematic changes
+- Maintained clean commit history
+
+## Key Learnings
+
+### 1. Django Deployment
+- Media files require special handling in production
+- Static files vs media files distinction is crucial
+- Environment variables management is essential
+
+### 2. User Preferences
+- Always respect user's tool preferences (uv over pip)
+- Test solutions before implementing
+- Provide multiple options when possible
+
+### 3. Security Considerations
+- Contact information protection is important
+- GDPR compliance requires careful planning
+- Cookie notices are legally required
+
+### 4. User Experience
+- Non-technical users need simple admin interfaces
+- Consistent styling improves professionalism
+- Mobile responsiveness is essential
+
+## Future Enhancements
+1. **Image Hosting**: Implement Cloudinary or similar service
+2. **Email Setup**: Configure SMTP for contact form
+3. **Domain Setup**: Point hg-planung.de to Render
+4. **SSL Certificate**: Ensure HTTPS (handled by Render)
+5. **Backup Strategy**: Database and media file backups
+6. **Monitoring**: Set up basic monitoring and alerts
+
+## Project Status
+- **Development**: Complete
+- **Local Testing**: Working
+- **Deployment**: Partially working (images issue)
+- **Content**: Sample data populated
+- **Legal Compliance**: Complete
+- **Security**: Contact protection implemented
+
+## Contact Information
+- **Company**: Herbert & Gransow - Planung GmbH
+- **Address**: Kühnhäuser Straße 15, 99095 Erfurt, Germany
+- **Phone**: +49 361 75193660
+- **Email**: info@hg-planung.de
+- **Website**: https://hg-planung.de/
+
+---
+*Project completed on: [Current Date]*
+*Total development time: [Duration]*
+*Key technologies: Django, Bootstrap 5, Render, uv* 
