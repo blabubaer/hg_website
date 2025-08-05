@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Cookie-Richtlinie | Herbert & Gransow - Planung GmbH{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="display-4 fw-bold mb-4">Cookie-Richtlinie</h1>
+                <p class="lead">
+                    Informationen über die Verwendung von Cookies auf unserer Website
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Cookie Policy Content -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <div class="card shadow">
+                    <div class="card-body p-5">
+                        
+                        <h2 class="mb-4">Was sind Cookies?</h2>
+                        <p>Cookies sind kleine Textdateien, die auf Ihrem Computer oder mobilen Gerät gespeichert werden, wenn Sie eine Website besuchen. Sie helfen dabei, die Website funktional zu halten und Informationen über Ihre Nutzung zu speichern.</p>
+
+                        <h2 class="mb-4 mt-5">Cookies auf unserer Website</h2>
+                        <p>Unsere Website verwendet ausschließlich <strong>technisch notwendige Cookies</strong>, die für die Grundfunktionen der Website erforderlich sind. Diese Cookies werden automatisch gesetzt und können nicht deaktiviert werden.</p>
+
+                        <h3 class="h5 mt-4">Verwendete Cookies im Detail:</h3>
+                        
+                        <div class="table-responsive mt-4">
+                            <table class="table table-bordered">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Cookie-Name</th>
+                                        <th>Zweck</th>
+                                        <th>Speicherdauer</th>
+                                        <th>Typ</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>csrftoken</code></td>
+                                        <td>Schutz vor Cross-Site-Request-Forgery-Angriffen (CSRF-Schutz)</td>
+                                        <td>Bis zum Schließen des Browsers</td>
+                                        <td><span class="badge bg-success">Notwendig</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>sessionid</code></td>
+                                        <td>Verwaltung der Benutzersitzung für die Website-Funktionalität</td>
+                                        <td>Bis zum Schließen des Browsers</td>
+                                        <td><span class="badge bg-success">Notwendig</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h2 class="mb-4 mt-5">Keine Tracking-Cookies</h2>
+                        <p>Wir verwenden <strong>keine</strong>:</p>
+                        <ul>
+                            <li>Analyse-Cookies (wie Google Analytics)</li>
+                            <li>Marketing-Cookies</li>
+                            <li>Social Media-Cookies</li>
+                            <li>Werbe-Cookies</li>
+                            <li>Personalisierungs-Cookies</li>
+                        </ul>
+
+                        <h2 class="mb-4 mt-5">Cookie-Verwaltung</h2>
+                        <p>Da wir ausschließlich technisch notwendige Cookies verwenden, können diese nicht deaktiviert werden, ohne die Funktionalität der Website zu beeinträchtigen.</p>
+
+                        <h3 class="h5 mt-4">Browser-Einstellungen</h3>
+                        <p>Sie können Cookies in Ihren Browser-Einstellungen verwalten:</p>
+                        <ul>
+                            <li><strong>Chrome:</strong> Einstellungen → Datenschutz und Sicherheit → Cookies und andere Websitedaten</li>
+                            <li><strong>Firefox:</strong> Einstellungen → Datenschutz & Sicherheit → Cookies und Website-Daten</li>
+                            <li><strong>Safari:</strong> Einstellungen → Datenschutz → Cookies und Website-Daten</li>
+                            <li><strong>Edge:</strong> Einstellungen → Cookies und Websiteberechtigungen</li>
+                        </ul>
+
+                        <div class="alert alert-info mt-4">
+                            <h5><i class="fas fa-info-circle me-2"></i>Wichtiger Hinweis</h5>
+                            <p class="mb-0">Das Deaktivieren von Cookies kann die Funktionalität unserer Website beeinträchtigen, insbesondere das Kontaktformular und die Navigation.</p>
+                        </div>
+
+                        <h2 class="mb-4 mt-5">Rechtsgrundlage</h2>
+                        <p>Die Verwendung der technisch notwendigen Cookies erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse). Unser berechtigtes Interesse liegt in der Bereitstellung einer funktionalen und sicheren Website.</p>
+
+                        <h2 class="mb-4 mt-5">Weitere Informationen</h2>
+                        <p>Für weitere Informationen über die Verarbeitung Ihrer personenbezogenen Daten besuchen Sie bitte unsere <a href="{% url 'legal:privacy_policy' %}">Datenschutzerklärung</a>.</p>
+
+                        <h2 class="mb-4 mt-5">Kontakt</h2>
+                        <p>Bei Fragen zu unserer Cookie-Richtlinie können Sie sich gerne an uns wenden:</p>
+                        <p>
+                            <strong>Herbert & Gransow - Planung GmbH</strong><br>
+                            Kühnhäuser Straße 15<br>
+                            99095 Erfurt<br>
+                            Deutschland<br>
+                            Telefon: +49 361 75193660<br>
+                            E-Mail: info@hg-planung.de
+                        </p>
+
+                        <div class="mt-5 pt-4 border-top">
+                            <p class="text-muted">
+                                <small>Stand: {% now "F Y" %}</small>
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %} 

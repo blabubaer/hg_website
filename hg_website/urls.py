@@ -24,6 +24,7 @@ urlpatterns = [
     path('', include('core.urls')),
     path('projekte/', include('projects.urls')),
     path('kontakt/', include('contact.urls')),
+    path('rechtliches/', include('legal.urls')),
 ]
 
 # Serve media files in development
