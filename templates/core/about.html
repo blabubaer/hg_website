@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Über uns | Herbert & Gransow - Planung GmbH{% endblock %}
 
@@ -8,8 +9,8 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 mx-auto text-center">
-                <h1 class="display-4 fw-bold mb-4">Über uns</h1>
-                <p class="lead">
+                <h1 class="display-4 fw-bold mb-4 text-white">Über uns</h1>
+                <p class="lead text-white">
                     Erfahren Sie mehr über unser Unternehmen und unser Team von erfahrenen Ingenieuren.
                 </p>
             </div>
@@ -22,7 +23,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 mx-auto">
-                <h2 class="text-center mb-5">Unsere Geschichte</h2>
+                <h2 class="section-title text-center mb-5">Unsere Geschichte</h2>
                 <div class="row g-4">
                     <div class="col-md-6">
                         <div class="card h-100">
@@ -64,16 +65,25 @@
     <div class="container">
         <div class="row">
             <div class="col-12 text-center mb-5">
-                <h2>Unser Team</h2>
-                <p class="lead text-muted">Erfahrene Ingenieure für Ihre Projekte</p>
+                <h2 class="section-title">Unser Team</h2>
+                <p class="section-subtitle">Erfahrene Ingenieure für Ihre Projekte</p>
             </div>
         </div>
         <div class="row g-4">
             <div class="col-lg-6">
                 <div class="card h-100">
                     <div class="card-body text-center">
-                        <div class="mb-3">
-                            <i class="fas fa-user-tie fa-5x text-primary"></i>
+                        <div class="mb-4">
+                            <!-- Photo placeholder for Herr Herbert -->
+                            <div class="team-photo-container">
+                                <img src="{% static 'images/team/herbert-placeholder.jpg' %}" 
+                                     alt="Herr Herbert" 
+                                     class="team-photo"
+                                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <div class="fallback-icon" style="display: none; width: 100%; height: 100%; align-items: center; justify-content: center;">
+                                    <i class="fas fa-user-tie fa-5x text-white"></i>
+                                </div>
+                            </div>
                         </div>
                         <h5 class="card-title">Herr Herbert</h5>
                         <p class="card-text text-muted">Gründer und Geschäftsführer</p>
@@ -87,8 +97,17 @@
             <div class="col-lg-6">
                 <div class="card h-100">
                     <div class="card-body text-center">
-                        <div class="mb-3">
-                            <i class="fas fa-user-graduate fa-5x text-primary"></i>
+                        <div class="mb-4">
+                            <!-- Photo placeholder for Herr Mario Gransow -->
+                            <div class="team-photo-container">
+                                <img src="{% static 'images/team/gransow-placeholder.jpg' %}" 
+                                     alt="Herr Mario Gransow" 
+                                     class="team-photo"
+                                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <div class="fallback-icon" style="display: none; width: 100%; height: 100%; align-items: center; justify-content: center;">
+                                    <i class="fas fa-user-tie fa-5x text-white"></i>
+                                </div>
+                            </div>
                         </div>
                         <h5 class="card-title">Herr Mario Gransow</h5>
                         <p class="card-text text-muted">Diplomingenieur der Elektrotechnik</p>
@@ -108,15 +127,17 @@
     <div class="container">
         <div class="row">
             <div class="col-12 text-center mb-5">
-                <h2>Unsere Erfahrung</h2>
-                <p class="lead text-muted">Erfolgreich abgeschlossene Projekte</p>
+                <h2 class="section-title">Unsere Erfahrung</h2>
+                <p class="section-subtitle">Erfolgreich abgeschlossene Projekte</p>
             </div>
         </div>
         <div class="row g-4">
             <div class="col-md-4">
                 <div class="card h-100 text-center">
                     <div class="card-body">
-                        <i class="fas fa-city fa-3x text-primary mb-3"></i>
+                        <div class="feature-icon">
+                            <i class="fas fa-city"></i>
+                        </div>
                         <h5 class="card-title">Historische Altstadt Schmalkalden</h5>
                         <p class="card-text">
                             Planung der technischen Ausrüstung für die historische Altstadt Schmalkaldens.
@@ -127,7 +148,9 @@
             <div class="col-md-4">
                 <div class="card h-100 text-center">
                     <div class="card-body">
-                        <i class="fas fa-leaf fa-3x text-primary mb-3"></i>
+                        <div class="feature-icon">
+                            <i class="fas fa-leaf"></i>
+                        </div>
                         <h5 class="card-title">Landesgartenschau 2015</h5>
                         <p class="card-text">
                             Außenanlagen im Bereich „Grüngürtel" der Innenstadt Schmalkalden bei den 
@@ -139,7 +162,9 @@
             <div class="col-md-4">
                 <div class="card h-100 text-center">
                     <div class="card-body">
-                        <i class="fas fa-industry fa-3x text-primary mb-3"></i>
+                        <div class="feature-icon">
+                            <i class="fas fa-industry"></i>
+                        </div>
                         <h5 class="card-title">VIBA-Nougatworld</h5>
                         <p class="card-text">
                             Planung der Außenanlagen der VIBA-Nougatworld mit modernster Technik.
@@ -156,35 +181,43 @@
     <div class="container">
         <div class="row">
             <div class="col-12 text-center mb-5">
-                <h2>Unsere Werte</h2>
-                <p class="lead text-muted">Was uns ausmacht</p>
+                <h2 class="section-title">Unsere Werte</h2>
+                <p class="section-subtitle">Was uns ausmacht</p>
             </div>
         </div>
         <div class="row g-4">
             <div class="col-md-3">
                 <div class="text-center">
-                    <i class="fas fa-award fa-3x text-primary mb-3"></i>
+                    <div class="feature-icon">
+                        <i class="fas fa-award"></i>
+                    </div>
                     <h5>Qualität</h5>
                     <p class="text-muted">Höchste Standards in allen Projekten</p>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="text-center">
-                    <i class="fas fa-clock fa-3x text-primary mb-3"></i>
+                    <div class="feature-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
                     <h5>Termintreue</h5>
                     <p class="text-muted">Pünktliche Fertigstellung aller Projekte</p>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="text-center">
-                    <i class="fas fa-users fa-3x text-primary mb-3"></i>
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
                     <h5>Kundennähe</h5>
                     <p class="text-muted">Persönliche Beratung und Betreuung</p>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="text-center">
-                    <i class="fas fa-lightbulb fa-3x text-primary mb-3"></i>
+                    <div class="feature-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
                     <h5>Innovation</h5>
                     <p class="text-muted">Moderne Lösungen für komplexe Herausforderungen</p>
                 </div>
@@ -198,8 +231,8 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 mx-auto text-center">
-                <h2>Lassen Sie uns zusammenarbeiten</h2>
-                <p class="lead mb-4">
+                <h2 class="section-title">Lassen Sie uns zusammenarbeiten</h2>
+                <p class="section-subtitle">
                     Profitieren Sie vom Know-how unseres Ingenieurbüros. 
                     Wir laden Sie gerne zu einem persönlichen Beratungsgespräch ein.
                 </p>
@@ -215,4 +248,35 @@
         </div>
     </div>
 </section>
+
+<style>
+.team-photo-container {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid var(--accent-color);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.team-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.team-photo:hover {
+    transform: scale(1.05);
+}
+
+.team-photo-container:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+</style>
 {% endblock %} 

@@ -6,6 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Herbert & Gransow - Planung GmbH{% endblock %}</title>
     
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/favicon-16x16.png' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-touch-icon.png' %}">
+    <link rel="shortcut icon" href="{% static 'favicon/favicon-32x32.png' %}">
+    
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -15,58 +21,230 @@
     <!-- Custom CSS -->
     <style>
         :root {
-            --primary-color: #2c3e50;
-            --secondary-color: #3498db;
-            --accent-color: #e74c3c;
-            --light-gray: #ecf0f1;
-            --dark-gray: #34495e;
+            --primary-color: #1a365d;
+            --secondary-color: #2d5a87;
+            --accent-color: #3182ce;
+            --light-gray: #f7fafc;
+            --dark-gray: #2d3748;
+            --text-color: #2d3748;
+            --border-color: #e2e8f0;
         }
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
+            color: var(--text-color);
+        }
+        
+        .navbar {
+            background: #ffffff !important;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-bottom: 2px solid #e2e8f0;
         }
         
         .navbar-brand {
-            font-weight: bold;
-            font-size: 1.5rem;
+            font-weight: 600;
+            font-size: 1.4rem;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 0;
+        }
+        
+        .logo-image {
+            height: 140px;
+            width: auto;
+            max-width: 400px;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
         }
         
         .hero-section {
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
             padding: 100px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-section h1,
+        .hero-section h2,
+        .hero-section h3,
+        .hero-section h4,
+        .hero-section h5,
+        .hero-section h6,
+        .hero-section p,
+        .hero-section .lead {
+            color: white !important;
+        }
+        
+        .hero-section .breadcrumb-item a {
+            color: rgba(255, 255, 255, 0.8) !important;
+        }
+        
+        .hero-section .breadcrumb-item a:hover {
+            color: white !important;
+        }
+        
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+        }
+        
+        .hero-section .container {
+            position: relative;
+            z-index: 1;
         }
         
         .card {
-            border: none;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            background: white;
         }
         
         .card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
         }
         
         .btn-primary {
-            background-color: var(--secondary-color);
-            border-color: var(--secondary-color);
+            background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+            border: none;
+            border-radius: 8px;
+            padding: 12px 24px;
+            font-weight: 500;
+            transition: all 0.3s ease;
         }
         
         .btn-primary:hover {
-            background-color: var(--primary-color);
-            border-color: var(--primary-color);
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(49, 130, 206, 0.3);
+        }
+        
+        .btn-outline-primary {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+            border-radius: 8px;
+            padding: 12px 24px;
+            font-weight: 500;
+        }
+        
+        .btn-outline-primary:hover {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+            transform: translateY(-2px);
         }
         
         .footer {
-            background-color: var(--primary-color);
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
-            padding: 40px 0 20px;
+            padding: 50px 0 30px;
         }
         
         .contact-info {
             background-color: var(--light-gray);
-            padding: 40px 0;
+            padding: 60px 0;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .nav-link {
+            font-weight: 500;
+            padding: 12px 20px !important;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            color: var(--primary-color) !important;
+        }
+        
+        .nav-link:hover {
+            background-color: rgba(49, 130, 206, 0.1);
+            transform: translateY(-1px);
+            color: var(--accent-color) !important;
+        }
+        
+        .navbar-nav .nav-link.active {
+            background-color: var(--accent-color);
+            color: white !important;
+            font-weight: 600;
+        }
+        
+        .content-wrapper {
+            min-height: 60vh;
+        }
+        
+        .footer h5 {
+            color: white;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        
+        .footer a {
+            color: #cbd5e0;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer a:hover {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            color: #718096;
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+        }
+        
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: white;
+            font-size: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .logo-container {
+                justify-content: center;
+                padding: 6px 0;
+            }
+            
+            .logo-image {
+                height: 100px;
+                max-width: 280px;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
         }
     </style>
     
@@ -74,11 +252,12 @@
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
             <a class="navbar-brand" href="{% url 'core:home' %}">
-                <i class="fas fa-bolt me-2"></i>
-                Herbert & Gransow
+                <div class="logo-container">
+                    <img src="{% static 'images/hg-logo.png' %}" alt="Herbert & Gransow Logo" class="logo-image">
+                </div>
             </a>
             
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -88,19 +267,19 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'core:home' %}">Home</a>
+                        <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'core:home' %}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'core:about' %}">Über uns</a>
+                        <a class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}" href="{% url 'core:about' %}">Über uns</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'core:services' %}">Leistungen</a>
+                        <a class="nav-link {% if request.resolver_match.url_name == 'services' %}active{% endif %}" href="{% url 'core:services' %}">Leistungen</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'projects:project_list' %}">Referenzen</a>
+                        <a class="nav-link {% if 'projects' in request.resolver_match.namespace %}active{% endif %}" href="{% url 'projects:project_list' %}">Referenzen</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'contact:contact' %}">Kontakt</a>
+                        <a class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}" href="{% url 'contact:contact' %}">Kontakt</a>
                     </li>
                 </ul>
             </div>
@@ -120,7 +299,7 @@
     {% endif %}
 
     <!-- Main Content -->
-    <main>
+    <main class="content-wrapper">
         {% block content %}{% endblock %}
     </main>
 
@@ -128,51 +307,48 @@
     <footer class="footer">
         <div class="container">
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <h5>Herbert & Gransow - Planung GmbH</h5>
                     <p>Ihr Partner für Technische Gebäudeausrüstung und Elektrotechnik</p>
                 </div>
-                <div class="col-md-4">
-                    <h5>Kontakt</h5>
+                <div class="col-md-3">
+                    <h5>Adresse</h5>
                     <p>
-                        <i class="fas fa-map-marker-alt me-2"></i> 
                         <a href="https://maps.google.com/?q=Kühnhäuser+Straße+15,+99095+Erfurt,+Germany" target="_blank" class="address-link">
                             Kühnhäuser Straße 15<br>
                             99095 Erfurt
                         </a>
-                        <br><br>
-                        <i class="fas fa-phone me-2"></i> 
-                        <a href="tel:+4936175193660" class="phone-protected">
+                    </p>
+                </div>
+                <div class="col-md-3">
+                    <h5>Kontakt</h5>
+                    <p>
+                        Tel.: <a href="tel:+4936175193660" class="phone-protected">
                             <span class="phone-part-1">+49</span><span class="phone-part-2">361</span><span class="phone-part-3">75193660</span>
                         </a>
                         <br>
-                        <i class="fas fa-envelope me-2"></i> 
-                                                 <a href="mailto:info@hg-planung.de" class="email-protected">
-                             <span>ed.gnulap-gh@ofni</span>
-                         </a>
+                        Mail: <a href="mailto:info@hg-planung.de" class="email-protected">
+                            <span>ed.gnulap-gh@ofni</span>
+                        </a>
                     </p>
                 </div>
-                                 <div class="col-md-4">
-                     <h5>Links</h5>
-                     <ul class="list-unstyled">
-                         <li><a href="{% url 'core:home' %}" class="text-light">Home</a></li>
-                         <li><a href="{% url 'core:about' %}" class="text-light">Über uns</a></li>
-                         <li><a href="{% url 'core:services' %}" class="text-light">Leistungen</a></li>
-                         <li><a href="{% url 'projects:project_list' %}" class="text-light">Referenzen</a></li>
-                         <li><a href="{% url 'contact:contact' %}" class="text-light">Kontakt</a></li>
-                     </ul>
-                 </div>
-                 <div class="col-md-4">
-                     <h5>Rechtliches</h5>
-                     <ul class="list-unstyled">
-                         <li><a href="{% url 'legal:privacy_policy' %}" class="text-light">Datenschutzerklärung</a></li>
-                         <li><a href="{% url 'legal:cookie_policy' %}" class="text-light">Cookie-Richtlinie</a></li>
-                     </ul>
-                 </div>
+                <div class="col-md-3">
+                    <h5>Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="{% url 'core:home' %}">Home</a></li>
+                        <li><a href="{% url 'core:about' %}">Über uns</a></li>
+                        <li><a href="{% url 'core:services' %}">Leistungen</a></li>
+                        <li><a href="{% url 'projects:project_list' %}">Referenzen</a></li>
+                        <li><a href="{% url 'contact:contact' %}">Kontakt</a></li>
+                        <li><a href="{% url 'legal:privacy_policy' %}">Datenschutzerklärung</a></li>
+                        <li><a href="{% url 'legal:cookie_policy' %}">Cookie-Richtlinie</a></li>
+                    </ul>
+                </div>
             </div>
-            <hr class="my-4">
+            <hr class="my-4" style="border-color: rgba(255,255,255,0.2);">
             <div class="text-center">
                 <p>&copy; {% now "Y" %} Herbert & Gransow - Planung GmbH. Alle Rechte vorbehalten.</p>
+                <p>www.hg-planung.de</p>
             </div>
         </div>
     </footer>
